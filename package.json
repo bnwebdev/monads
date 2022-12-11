@@ -5,8 +5,8 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build:share": "tsc -p tsconfig.build.json && rm -rf src",
-    "build:dev": "rm -rf dist",
+    "build": "tsc -p tsconfig.build.json",
+    "build:share": "npm run build && rm -rf src",
     "test": "jest"
   },
   "keywords": [],
