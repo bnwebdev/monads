@@ -9,5 +9,8 @@ class Maybe extends Monad_1.Monad {
         }
         return this.runWith(transformer, Maybe);
     }
+    async vow() {
+        return new Maybe(await this.value);
+    }
 }
 exports.Maybe = Maybe;
