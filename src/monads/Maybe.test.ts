@@ -56,3 +56,26 @@ test("full user", async () => {
   expect(dog.value).toEqual({ age: 1, name: "Bark" });
   expect(name.value).toBe("Bark");
 });
+
+test("full user with async", async () => {
+  const user = await new Maybe(getFullUser()).vow();
+  const dog = await user.run(async (user) => user.dog).vow();
+  const name = await dog.run(async (dog) => dog.name).vow();
+
+  expect(user.value).toEqual({
+    username: "Nick2",
+    age: 23,
+    dog: { age: 1, name: "Bark" },
+  });
+  expect(dog.value).toEqual({ age: 1, name: "Bark" });
+  expect(name.value).toBe("Bark");
+});
+
+test("full user with chain async", async () => {
+  const name = await new Maybe(getFullUser())
+    .vow()
+    .then((user) => user.run(async (user) => user.dog).vow())
+    .then((dog) => dog.run(async (dog) => dog.name).vow());
+
+  expect(name.value).toBe("Bark");
+});
